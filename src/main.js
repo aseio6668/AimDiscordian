@@ -215,8 +215,15 @@ class AIMDiscordian {
         });
 
         ipcMain.on('show-buddy-info', (event, buddyId) => {
-            // Handle buddy info display
-            console.log('Show buddy info for:', buddyId);
+            this.openBuddyInfoWindow(buddyId);
+        });
+
+        ipcMain.on('close-buddy-info-window', (event) => {
+            // Find and close the buddy info window
+            const window = BrowserWindow.fromWebContents(event.sender);
+            if (window) {
+                window.close();
+            }
         });
 
         ipcMain.on('minimize-window', () => {
@@ -284,6 +291,37 @@ class AIMDiscordian {
         });
 
         return chatWindow.id;
+    }
+
+    openBuddyInfoWindow(buddyId) {
+        const infoWindow = new BrowserWindow({
+            width: 300,
+            height: 400,
+            minWidth: 280,
+            minHeight: 350,
+            maxWidth: 350,
+            maxHeight: 500,
+            parent: this.mainWindow,
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false,
+                additionalArguments: [`--buddy-id=${buddyId}`]
+            },
+            title: 'Buddy Info',
+            backgroundColor: '#c0c0c0',
+            show: false,
+            resizable: true,
+            minimizable: false,
+            maximizable: false
+        });
+
+        infoWindow.loadFile(path.join(__dirname, 'renderer/buddy-info.html'));
+        
+        infoWindow.once('ready-to-show', () => {
+            infoWindow.show();
+        });
+
+        return infoWindow.id;
     }
 
     signOn() {

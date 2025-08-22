@@ -338,8 +338,84 @@ class ChatWindow {
     }
 
     showBuddyInfo() {
-        // Send message to main window to show buddy info
+        // Use IPC to open buddy info in separate window
         ipcRenderer.send('show-buddy-info', this.buddyId);
+        return;
+
+        // Old modal dialog code (kept as fallback):
+        if (!this.buddy) {
+            console.warn('No buddy data available for info dialog');
+            return;
+        }
+        
+        // Create buddy info dialog
+        const dialog = document.createElement('div');
+        dialog.className = 'dialog-overlay';
+        dialog.innerHTML = `
+            <div class="dialog-box" style="width: 300px;">
+                <div class="dialog-title">
+                    <span>${this.buddy.name} - Buddy Info</span>
+                    <button class="dialog-close">×</button>
+                </div>
+                <div class="dialog-content">
+                    <div style="text-align: center; margin-bottom: 12px;">
+                        <div style="font-size: 48px; line-height: 1; border: 2px inset #c0c0c0; width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center; background: #f0f0f0; margin: 0 auto;">${this.buddy.avatar || '👤'}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Screen Name:</label>
+                        <div style="font-weight: bold; color: #000080;">${this.buddy.name}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <div>${this.buddy.status === 'online' ? 'Online' : 'Offline'}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Personality:</label>
+                        <div>${this.buddy.personalityType || 'Friendly'}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>AI Settings:</label>
+                        <div style="font-size: 11px; color: #666;">
+                            Chattiness: ${this.buddy.chattiness || 5}/10<br>
+                            Intelligence: ${this.buddy.intelligence || 7}/10<br>
+                            Empathy: ${this.buddy.empathy || 6}/10
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Friendship Level:</label>
+                        <div>${this.getFriendshipLevel(this.buddy.friendshipScore || 0)}</div>
+                    </div>
+                </div>
+                <div class="dialog-buttons">
+                    <button class="dialog-btn">Close</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(dialog);
+
+        // Event listeners
+        dialog.querySelector('.dialog-close').addEventListener('click', () => {
+            document.body.removeChild(dialog);
+        });
+
+        dialog.querySelector('.dialog-btn').addEventListener('click', () => {
+            document.body.removeChild(dialog);
+        });
+
+        dialog.addEventListener('click', (e) => {
+            if (e.target === dialog) {
+                document.body.removeChild(dialog);
+            }
+        });
+    }
+
+    getFriendshipLevel(score) {
+        if (score >= 80) return 'Best Friends';
+        if (score >= 60) return 'Close Friends';
+        if (score >= 40) return 'Good Friends';
+        if (score >= 20) return 'Friends';
+        return 'Acquaintances';
     }
 
     showContextMenu(event, messageElement) {

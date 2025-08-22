@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy Info</title>
+    <link rel="stylesheet" href="styles/buddy-info.css">
+</head>
+<body>
+    <div class="buddy-info-window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <img src="../assets/icons/running-man-blue.png" alt="AIM" class="aim-icon">
+                <span id="windowTitle">Buddy Info</span>
+            </div>
+            <div class="title-bar-controls">
+                <button class="title-bar-control" id="closeBtn">×</button>
+            </div>
+        </div>
+
+        <!-- Info Content -->
+        <div class="info-content">
+            <div class="avatar-section">
+                <div class="buddy-avatar" id="buddyAvatar">👤</div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-group">
+                    <label>Screen Name:</label>
+                    <div class="info-value screen-name" id="screenName">Loading...</div>
+                </div>
+
+                <div class="info-group">
+                    <label>Status:</label>
+                    <div class="info-value" id="buddyStatus">Online</div>
+                </div>
+
+                <div class="info-group">
+                    <label>Personality:</label>
+                    <div class="info-value" id="personalityType">Friendly</div>
+                </div>
+
+                <div class="info-group">
+                    <label>AI Settings:</label>
+                    <div class="info-value ai-settings" id="aiSettings">
+                        <div>Chattiness: <span id="chattiness">5</span>/10</div>
+                        <div>Intelligence: <span id="intelligence">7</span>/10</div>
+                        <div>Empathy: <span id="empathy">6</span>/10</div>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <label>Friendship Level:</label>
+                    <div class="info-value friendship-level" id="friendshipLevel">Acquaintances</div>
+                </div>
+
+                <div class="info-group">
+                    <label>Conversations:</label>
+                    <div class="info-value" id="conversationCount">0 messages exchanged</div>
+                </div>
+
+                <div class="info-group">
+                    <label>Created:</label>
+                    <div class="info-value" id="createdDate">Unknown</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="sendMessageBtn">Send Message</button>
+            <button class="btn btn-secondary" id="closeWindowBtn">Close</button>
+        </div>
+    </div>
+
+    <script src="scripts/buddy-info.js"></script>
+</body>
+</html>

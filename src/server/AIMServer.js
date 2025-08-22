@@ -3,7 +3,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const AIProvider = require('./AIProvider');
 const ConversationManager = require('./ConversationManager');
-const Database = require('./Database');
+const AIMDatabase = require('./Database');
 
 class AIMServer {
     constructor() {
@@ -26,7 +26,7 @@ class AIMServer {
             await this.ensureDirectories();
             
             // Initialize database
-            this.database = new Database();
+            this.database = new AIMDatabase();
             await this.database.initialize();
             
             // Initialize AI provider

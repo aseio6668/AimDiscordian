@@ -277,6 +277,11 @@ class AIMClient {
     }
 
     showBuddyInfoDialog(buddy) {
+        // Use IPC to open buddy info in separate window
+        ipcRenderer.send('show-buddy-info', buddy.id);
+        return;
+        
+        // Old modal dialog code (kept as fallback):
         // Create buddy info dialog
         const dialog = document.createElement('div');
         dialog.className = 'dialog-overlay';
@@ -288,7 +293,7 @@ class AIMClient {
                 </div>
                 <div class="dialog-content">
                     <div style="text-align: center; margin-bottom: 12px;">
-                        <img src="../assets/avatars/${buddy.avatar || 'default.png'}" alt="Avatar" style="width: 48px; height: 48px; border: 2px inset #c0c0c0;">
+                        <div style="font-size: 48px; line-height: 1; border: 2px inset #c0c0c0; width: 52px; height: 52px; display: inline-flex; align-items: center; justify-content: center; background: #f0f0f0;">${buddy.avatar || '👤'}</div>
                     </div>
                     <div class="form-group">
                         <label>Screen Name:</label>
