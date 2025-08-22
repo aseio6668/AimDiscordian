@@ -1,0 +1,39 @@
+{
+  "webPort": 3000,
+  "maxBots": 10,
+  "defaultAI": {
+    "provider": "auto",
+    "ollamaUrl": "http://localhost:11434",
+    "cloudModels": {
+      "openai": {
+        "model": "gpt-3.5-turbo",
+        "enabled": false
+      },
+      "anthropic": {
+        "model": "claude-3-haiku",
+        "enabled": false
+      }
+    }
+  },
+  "bot": {
+    "responseDelay": {
+      "min": 2000,
+      "max": 8000
+    },
+    "personality": {
+      "warmth": 0.8,
+      "friendliness": 0.9,
+      "chattiness": 0.4,
+      "helpfulness": 0.9
+    },
+    "learning": {
+      "enabled": true,
+      "memorySize": 1000,
+      "learningRate": 0.1
+    }
+  },
+  "backup": {
+    "interval": "0 */6 * * *",
+    "keepCount": 10
+  }
+}

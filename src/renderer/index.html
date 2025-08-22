@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIM Discordian</title>
+    <link rel="stylesheet" href="styles/aim.css">
+</head>
+<body>
+    <div class="aim-window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <img src="../assets/icons/running-man-blue.png" alt="AIM" class="aim-icon">
+                AIM Discordian
+            </div>
+            <div class="title-bar-controls">
+                <button class="title-bar-control" id="minimize">_</button>
+                <button class="title-bar-control" id="close">×</button>
+            </div>
+        </div>
+
+        <!-- Sign-on Panel -->
+        <div class="signin-panel" id="signinPanel">
+            <div class="signin-header">
+                <img src="../assets/icons/running-man-blue.png" alt="AIM" class="signin-logo">
+                <h2>Welcome to AIM Discordian</h2>
+                <p>Your AI Friends Await!</p>
+            </div>
+            
+            <div class="signin-form">
+                <div class="form-group">
+                    <label for="screenname">Screen Name:</label>
+                    <input type="text" id="screenname" placeholder="Enter your screen name" value="Me">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Enter password" value="password">
+                </div>
+                
+                <div class="signin-options">
+                    <label>
+                        <input type="checkbox" id="autoLogin" checked>
+                        Auto-login
+                    </label>
+                    <label>
+                        <input type="checkbox" id="savePassword" checked>
+                        Save password
+                    </label>
+                </div>
+                
+                <button class="signin-btn" id="signinBtn">Sign On</button>
+            </div>
+        </div>
+
+        <!-- Main Buddy List -->
+        <div class="buddy-list" id="buddyList" style="display: none;">
+            <!-- User Info Bar -->
+            <div class="user-info">
+                <div class="user-status">
+                    <span class="user-avatar" id="userAvatar" title="Click to change avatar">👤</span>
+                    <span class="status-dot online" id="statusDot"></span>
+                    <span class="username" id="username">Me</span>
+                    <select class="status-dropdown" id="statusDropdown">
+                        <option value="online">Online</option>
+                        <option value="away">Away</option>
+                        <option value="invisible">Invisible</option>
+                    </select>
+                </div>
+                <div class="user-controls">
+                    <button class="user-btn" id="setupBtn" title="Setup">Setup</button>
+                    <button class="user-btn" id="mailBtn" title="Mail">Mail</button>
+                </div>
+            </div>
+
+            <!-- Buddy Groups -->
+            <div class="buddy-groups">
+                <!-- Online Buddies -->
+                <div class="buddy-group">
+                    <div class="group-header" onclick="toggleGroup('online-buddies')">
+                        <span class="group-expand">▼</span>
+                        <span class="group-icon">🤖</span>
+                        <span class="group-name">AI Friends (<span id="onlineCount">0</span>)</span>
+                    </div>
+                    <div class="group-content" id="online-buddies">
+                        <!-- Online buddies will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Offline Buddies -->
+                <div class="buddy-group">
+                    <div class="group-header" onclick="toggleGroup('offline-buddies')">
+                        <span class="group-expand">▼</span>
+                        <span class="group-icon">💤</span>
+                        <span class="group-name">Offline (<span id="offlineCount">0</span>)</span>
+                    </div>
+                    <div class="group-content" id="offline-buddies">
+                        <!-- Offline buddies will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Toolbar -->
+            <div class="bottom-toolbar">
+                <button class="toolbar-btn" id="imBtn" title="Send Instant Message">IM</button>
+                <button class="toolbar-btn" id="infoBtn" title="Get Info">Info</button>
+                <button class="toolbar-btn" id="addBtn" title="Add Buddy">Add</button>
+                <button class="toolbar-btn" id="blockBtn" title="Block">Block</button>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="statusText">Ready</span>
+        </div>
+    </div>
+
+    <!-- User Avatar Dialog -->
+    <div class="dialog-overlay" id="userAvatarDialog" style="display: none;">
+        <div class="dialog-box">
+            <div class="dialog-title">
+                <span>Choose Your Avatar</span>
+                <button class="dialog-close" onclick="closeUserAvatarDialog()">×</button>
+            </div>
+            <div class="dialog-content">
+                <div class="avatar-selection" id="userAvatarSelection">
+                    <div class="avatar-option" data-avatar="👤">
+                        <div class="avatar-placeholder">👤</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="😊">
+                        <div class="avatar-placeholder">😊</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="😎">
+                        <div class="avatar-placeholder">😎</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🤓">
+                        <div class="avatar-placeholder">🤓</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🎨">
+                        <div class="avatar-placeholder">🎨</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🔬">
+                        <div class="avatar-placeholder">🔬</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🎵">
+                        <div class="avatar-placeholder">🎵</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🎮">
+                        <div class="avatar-placeholder">🎮</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="👨‍🍳">
+                        <div class="avatar-placeholder">👨‍🍳</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🏔️">
+                        <div class="avatar-placeholder">🏔️</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="📚">
+                        <div class="avatar-placeholder">📚</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="💻">
+                        <div class="avatar-placeholder">💻</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🌲">
+                        <div class="avatar-placeholder">🌲</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🚀">
+                        <div class="avatar-placeholder">🚀</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🐱">
+                        <div class="avatar-placeholder">🐱</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🐕">
+                        <div class="avatar-placeholder">🐕</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🔮">
+                        <div class="avatar-placeholder">🔮</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🤔">
+                        <div class="avatar-placeholder">🤔</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="😂">
+                        <div class="avatar-placeholder">😂</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🤗">
+                        <div class="avatar-placeholder">🤗</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="👑">
+                        <div class="avatar-placeholder">👑</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🌟">
+                        <div class="avatar-placeholder">🌟</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🦄">
+                        <div class="avatar-placeholder">🦄</div>
+                    </div>
+                    <div class="avatar-option" data-avatar="🔥">
+                        <div class="avatar-placeholder">🔥</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-buttons">
+                <button class="dialog-btn" onclick="closeUserAvatarDialog()">Cancel</button>
+                <button class="dialog-btn primary" id="selectUserAvatarBtn">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Buddy Dialog -->
+    <div class="dialog-overlay" id="addBuddyDialog" style="display: none;">
+        <div class="dialog-box">
+            <div class="dialog-title">
+                <span>Add AI Buddy</span>
+                <button class="dialog-close" onclick="closeAddBuddyDialog()">×</button>
+            </div>
+            <div class="dialog-content">
+                <div class="form-group">
+                    <label for="buddyName">Buddy Name:</label>
+                    <input type="text" id="buddyName" placeholder="Enter buddy name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="buddyPersonality">Personality Type:</label>
+                    <select id="buddyPersonality">
+                        <option value="friendly">Friendly & Outgoing</option>
+                        <option value="intellectual">Intellectual & Thoughtful</option>
+                        <option value="funny">Funny & Entertaining</option>
+                        <option value="supportive">Supportive & Caring</option>
+                        <option value="adventurous">Adventurous & Energetic</option>
+                        <option value="mysterious">Mysterious & Intriguing</option>
+                        <option value="wise">Wise & Philosophical</option>
+                        <option value="creative">Creative & Artistic</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="buddyAvatar">Avatar:</label>
+                    <div class="avatar-selection">
+                        <div class="avatar-option selected" data-avatar="friendly_face">
+                            <div class="avatar-placeholder">😊</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="cool_guy">
+                            <div class="avatar-placeholder">😎</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="smart_girl">
+                            <div class="avatar-placeholder">🤓</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="artist">
+                            <div class="avatar-placeholder">🎨</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="scientist">
+                            <div class="avatar-placeholder">🔬</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="musician">
+                            <div class="avatar-placeholder">🎵</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="gamer">
+                            <div class="avatar-placeholder">🎮</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="chef">
+                            <div class="avatar-placeholder">👨‍🍳</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="adventurer">
+                            <div class="avatar-placeholder">🏔️</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="bookworm">
+                            <div class="avatar-placeholder">📚</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="tech_guru">
+                            <div class="avatar-placeholder">💻</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="nature_lover">
+                            <div class="avatar-placeholder">🌲</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="space_fan">
+                            <div class="avatar-placeholder">🚀</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="cat_person">
+                            <div class="avatar-placeholder">🐱</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="dog_person">
+                            <div class="avatar-placeholder">🐕</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="mystic">
+                            <div class="avatar-placeholder">🔮</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="philosopher">
+                            <div class="avatar-placeholder">🤔</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="comedian">
+                            <div class="avatar-placeholder">😂</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="helper">
+                            <div class="avatar-placeholder">🤗</div>
+                        </div>
+                        <div class="avatar-option" data-avatar="robot">
+                            <div class="avatar-placeholder">🤖</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>AI Settings:</label>
+                    <div class="ai-settings">
+                        <div class="setting-row">
+                            <label>Chattiness:</label>
+                            <input type="range" id="chattiness" min="1" max="10" value="5">
+                            <span id="chattinessValue">5</span>
+                        </div>
+                        <div class="setting-row">
+                            <label>Intelligence:</label>
+                            <input type="range" id="intelligence" min="1" max="10" value="7">
+                            <span id="intelligenceValue">7</span>
+                        </div>
+                        <div class="setting-row">
+                            <label>Empathy:</label>
+                            <input type="range" id="empathy" min="1" max="10" value="6">
+                            <span id="empathyValue">6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-buttons">
+                <button class="dialog-btn" onclick="closeAddBuddyDialog()">Cancel</button>
+                <button class="dialog-btn primary" id="createBuddyBtn">Create Buddy</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/sounds.js"></script>
+    <script src="scripts/aim.js"></script>
+    <script src="scripts/buddies.js"></script>
+</body>
+</html>

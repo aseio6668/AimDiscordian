@@ -1,0 +1,31 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue Running Man - AIM Style -->
+  
+  <!-- Head -->
+  <circle cx="20" cy="12" r="6" fill="#0080ff" stroke="#0060c0" stroke-width="1"/>
+  
+  <!-- Body -->
+  <ellipse cx="22" cy="24" rx="5" ry="8" fill="#0080ff" stroke="#0060c0" stroke-width="1"/>
+  
+  <!-- Running Arms -->
+  <!-- Left arm (back) -->
+  <ellipse cx="15" cy="20" rx="2" ry="6" fill="#0080ff" stroke="#0060c0" stroke-width="1" transform="rotate(-30 15 20)"/>
+  
+  <!-- Right arm (forward) -->
+  <ellipse cx="29" cy="18" rx="2" ry="7" fill="#0080ff" stroke="#0060c0" stroke-width="1" transform="rotate(45 29 18)"/>
+  
+  <!-- Running Legs -->
+  <!-- Left leg (back, bent) -->
+  <ellipse cx="18" cy="35" rx="2.5" ry="6" fill="#0080ff" stroke="#0060c0" stroke-width="1" transform="rotate(-20 18 35)"/>
+  
+  <!-- Right leg (forward, extended) -->
+  <ellipse cx="28" cy="38" rx="2.5" ry="8" fill="#0080ff" stroke="#0060c0" stroke-width="1" transform="rotate(15 28 38)"/>
+  
+  <!-- Motion lines for speed effect -->
+  <line x1="8" y1="15" x2="12" y2="15" stroke="#4080ff" stroke-width="2" opacity="0.6"/>
+  <line x1="6" y1="20" x2="11" y2="20" stroke="#4080ff" stroke-width="2" opacity="0.5"/>
+  <line x1="7" y1="25" x2="10" y2="25" stroke="#4080ff" stroke-width="2" opacity="0.4"/>
+  
+  <!-- Shadow/ground effect -->
+  <ellipse cx="24" cy="44" rx="8" ry="2" fill="#000080" opacity="0.2"/>
+</svg>

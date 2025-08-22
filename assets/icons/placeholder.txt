@@ -1,0 +1,25 @@
+# Asset Placeholders
+
+## Icons needed:
+- running-man-blue.png (24x24, 16x16, 48x48)
+- online.gif
+- away.gif  
+- invisible.gif
+- offline.gif
+- group.gif
+
+## Avatars needed:
+- default.png
+- female.png
+- male.png
+- robot.png
+
+## Sounds needed:
+- signon.wav
+- signoff.wav
+- receive.wav
+- send.wav
+- buddyon.wav
+- buddyoff.wav
+
+These can be created or sourced from classic AIM resources.

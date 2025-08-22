@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences - AIM Discordian</title>
+    <link rel="stylesheet" href="styles/preferences.css">
+</head>
+<body>
+    <div class="preferences-window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="title-bar-text">
+                <img src="../assets/icons/running-man-blue.png" alt="AIM" class="aim-icon">
+                Preferences
+            </div>
+            <div class="title-bar-controls">
+                <button class="title-bar-control" id="closeBtn">×</button>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="general">General</button>
+                <button class="tab-btn" data-tab="appearance">Appearance</button>
+                <button class="tab-btn" data-tab="ai">AI Settings</button>
+                <button class="tab-btn" data-tab="sounds">Sounds</button>
+                <button class="tab-btn" data-tab="privacy">Privacy</button>
+            </div>
+
+            <!-- General Tab -->
+            <div class="tab-content active" id="general">
+                <h3>General Settings</h3>
+                
+                <div class="setting-group">
+                    <label>Auto-login on startup</label>
+                    <input type="checkbox" id="autoLogin" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Save password</label>
+                    <input type="checkbox" id="savePassword" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Start minimized</label>
+                    <input type="checkbox" id="startMinimized">
+                </div>
+
+                <div class="setting-group">
+                    <label>Show offline buddies</label>
+                    <input type="checkbox" id="showOfflineBuddies" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Auto-backup frequency</label>
+                    <select id="backupFrequency">
+                        <option value="never">Never</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly" selected>Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label>Maximum buddies per group</label>
+                    <input type="number" id="maxBuddies" min="5" max="100" value="50">
+                </div>
+            </div>
+
+            <!-- Appearance Tab -->
+            <div class="tab-content" id="appearance">
+                <h3>Appearance Settings</h3>
+
+                <div class="setting-group">
+                    <label>Window theme</label>
+                    <select id="windowTheme">
+                        <option value="classic" selected>Classic AIM</option>
+                        <option value="blue">Blue Theme</option>
+                        <option value="green">Green Theme</option>
+                        <option value="purple">Purple Theme</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label>Font size</label>
+                    <select id="fontSize">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label>Show timestamps in chat</label>
+                    <input type="checkbox" id="showTimestamps" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Show typing indicators</label>
+                    <input type="checkbox" id="showTyping" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Chat window transparency</label>
+                    <input type="range" id="transparency" min="50" max="100" value="100">
+                    <span id="transparencyValue">100%</span>
+                </div>
+
+                <div class="setting-group">
+                    <label>Buddy list always on top</label>
+                    <input type="checkbox" id="alwaysOnTop">
+                </div>
+            </div>
+
+            <!-- AI Settings Tab -->
+            <div class="tab-content" id="ai">
+                <h3>AI Settings</h3>
+
+                <div class="setting-group">
+                    <label>Preferred AI Provider</label>
+                    <select id="aiProvider">
+                        <option value="auto" selected>Auto-select best available</option>
+                        <option value="ollama">Ollama (Local)</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="anthropic">Anthropic</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label>Ollama URL</label>
+                    <input type="text" id="ollamaUrl" value="http://localhost:11434">
+                </div>
+
+                <div class="setting-group">
+                    <label>OpenAI API Key</label>
+                    <input type="password" id="openaiKey" placeholder="sk-...">
+                    <small>Enter your OpenAI API key for GPT models</small>
+                </div>
+
+                <div class="setting-group">
+                    <label>Anthropic API Key</label>
+                    <input type="password" id="anthropicKey" placeholder="sk-ant-...">
+                    <small>Enter your Anthropic API key for Claude models</small>
+                </div>
+
+                <div class="setting-group">
+                    <label>Default response delay (seconds)</label>
+                    <div class="range-group">
+                        <span>Min: </span>
+                        <input type="range" id="minDelay" min="1" max="10" value="2">
+                        <span id="minDelayValue">2s</span>
+                        <span> Max: </span>
+                        <input type="range" id="maxDelay" min="3" max="15" value="8">
+                        <span id="maxDelayValue">8s</span>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>Enable conversation learning</label>
+                    <input type="checkbox" id="enableLearning" checked>
+                    <small>Allow bots to learn from conversations to improve responses</small>
+                </div>
+
+                <div class="setting-group">
+                    <label>Memory compacting threshold</label>
+                    <input type="number" id="memoryThreshold" min="100" max="2000" value="500">
+                    <small>Number of messages before compacting conversation history</small>
+                </div>
+            </div>
+
+            <!-- Sounds Tab -->
+            <div class="tab-content" id="sounds">
+                <h3>Sound Settings</h3>
+
+                <div class="setting-group">
+                    <label>Enable sounds</label>
+                    <input type="checkbox" id="enableSounds" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Master volume</label>
+                    <input type="range" id="masterVolume" min="0" max="100" value="50">
+                    <span id="volumeValue">50%</span>
+                </div>
+
+                <div class="sound-options">
+                    <div class="sound-setting">
+                        <label>Sign on sound</label>
+                        <input type="checkbox" id="signonSound" checked>
+                        <button class="test-sound" data-sound="signon">Test</button>
+                    </div>
+
+                    <div class="sound-setting">
+                        <label>Sign off sound</label>
+                        <input type="checkbox" id="signoffSound" checked>
+                        <button class="test-sound" data-sound="signoff">Test</button>
+                    </div>
+
+                    <div class="sound-setting">
+                        <label>Receive message</label>
+                        <input type="checkbox" id="receiveSound" checked>
+                        <button class="test-sound" data-sound="receive">Test</button>
+                    </div>
+
+                    <div class="sound-setting">
+                        <label>Send message</label>
+                        <input type="checkbox" id="sendSound">
+                        <button class="test-sound" data-sound="send">Test</button>
+                    </div>
+
+                    <div class="sound-setting">
+                        <label>Buddy online</label>
+                        <input type="checkbox" id="buddyonSound" checked>
+                        <button class="test-sound" data-sound="buddyon">Test</button>
+                    </div>
+
+                    <div class="sound-setting">
+                        <label>Buddy offline</label>
+                        <input type="checkbox" id="buddyoffSound">
+                        <button class="test-sound" data-sound="buddyoff">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Tab -->
+            <div class="tab-content" id="privacy">
+                <h3>Privacy & Security</h3>
+
+                <div class="setting-group">
+                    <label>Encrypt conversation history</label>
+                    <input type="checkbox" id="encryptHistory" checked>
+                </div>
+
+                <div class="setting-group">
+                    <label>Auto-delete old conversations</label>
+                    <select id="autoDelete">
+                        <option value="never" selected>Never</option>
+                        <option value="30days">After 30 days</option>
+                        <option value="90days">After 90 days</option>
+                        <option value="1year">After 1 year</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label>Log AI interactions for debugging</label>
+                    <input type="checkbox" id="logInteractions">
+                    <small>Helps improve bot responses but stores more data</small>
+                </div>
+
+                <div class="setting-group">
+                    <label>Share anonymous usage statistics</label>
+                    <input type="checkbox" id="shareStats">
+                    <small>Help improve AIM Discordian (no personal data)</small>
+                </div>
+
+                <div class="danger-zone">
+                    <h4>⚠️ Danger Zone</h4>
+                    <button class="danger-btn" id="clearAllData">Clear All Data</button>
+                    <small>This will delete all buddies, conversations, and settings</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+            <button class="btn btn-primary" id="applyBtn">Apply</button>
+            <button class="btn btn-primary" id="okBtn">OK</button>
+        </div>
+    </div>
+
+    <script src="scripts/sounds.js"></script>
+    <script src="scripts/preferences.js"></script>
+</body>
+</html>
