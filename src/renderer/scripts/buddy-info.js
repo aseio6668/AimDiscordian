@@ -59,12 +59,22 @@ class BuddyInfoWindow {
     updateBuddyInfo() {
         if (!this.buddy) return;
 
+        // Avatar emoji mapping (should match aim.js and chat.js)
+        const avatarEmojis = {
+            'friendly_face': '😊', 'cool_guy': '😎', 'smart_girl': '🤓', 'artist': '🎨',
+            'scientist': '🔬', 'musician': '🎵', 'gamer': '🎮', 'chef': '👨‍🍳',
+            'adventurer': '🏔️', 'bookworm': '📚', 'tech_guru': '💻', 'nature_lover': '🌲',
+            'space_fan': '🚀', 'cat_person': '🐱', 'dog_person': '🐕', 'mystic': '🔮',
+            'philosopher': '🤔', 'comedian': '😂', 'helper': '🤗', 'robot': '🤖'
+        };
+
         // Window title
         document.getElementById('windowTitle').textContent = `${this.buddy.name} - Buddy Info`;
         document.title = `${this.buddy.name} - Buddy Info`;
 
-        // Avatar
-        document.getElementById('buddyAvatar').textContent = this.buddy.avatar || '👤';
+        // Avatar - convert avatar key to emoji or use default
+        const avatarEmoji = avatarEmojis[this.buddy.avatar] || this.buddy.avatar || '👤';
+        document.getElementById('buddyAvatar').textContent = avatarEmoji;
 
         // Basic info
         document.getElementById('screenName').textContent = this.buddy.name;

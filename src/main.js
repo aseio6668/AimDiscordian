@@ -295,12 +295,12 @@ class AIMDiscordian {
 
     openBuddyInfoWindow(buddyId) {
         const infoWindow = new BrowserWindow({
-            width: 300,
-            height: 400,
-            minWidth: 280,
-            minHeight: 350,
-            maxWidth: 350,
-            maxHeight: 500,
+            width: 320,
+            height: 480,
+            minWidth: 300,
+            minHeight: 400,
+            maxWidth: 400,
+            maxHeight: 600,
             parent: this.mainWindow,
             webPreferences: {
                 nodeIntegration: true,
@@ -310,15 +310,28 @@ class AIMDiscordian {
             title: 'Buddy Info',
             backgroundColor: '#c0c0c0',
             show: false,
-            resizable: true,
+            resizable: false,
             minimizable: false,
-            maximizable: false
+            maximizable: false,
+            autoHideMenuBar: true
         });
 
         infoWindow.loadFile(path.join(__dirname, 'renderer/buddy-info.html'));
         
         infoWindow.once('ready-to-show', () => {
-            infoWindow.show();
+            // Auto-fit window to content after loading
+            const contents = infoWindow.webContents;
+            contents.executeJavaScript(`
+                document.body.scrollHeight + 40
+            `).then(contentHeight => {
+                const newHeight = Math.min(600, Math.max(400, contentHeight));
+                infoWindow.setSize(320, newHeight);
+                infoWindow.center();
+                infoWindow.show();
+            }).catch(() => {
+                // Fallback if content measurement fails
+                infoWindow.show();
+            });
         });
 
         return infoWindow.id;
