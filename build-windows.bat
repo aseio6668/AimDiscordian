@@ -13,14 +13,6 @@ if errorlevel 1 (
     exit /b 1
 )
 
-:: Check if npm is available
-npm --version >nul 2>&1
-if errorlevel 1 (
-    echo ERROR: npm is not available
-    pause
-    exit /b 1
-)
-
 echo Installing dependencies...
 call npm install
 if errorlevel 1 (
@@ -30,7 +22,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo Building Windows executable...
+echo Building for Windows...
 call npm run build-win
 if errorlevel 1 (
     echo ERROR: Build failed
