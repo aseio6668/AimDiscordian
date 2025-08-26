@@ -203,6 +203,10 @@ class ChatWindow {
 
         // Add to UI immediately
         this.addMessageToUI(userMessage);
+        
+        // Play send sound
+        this.playSound('send');
+        
         messageInput.value = '';
         document.getElementById('charCount').textContent = '0/1000';
         document.getElementById('sendBtn').disabled = true;

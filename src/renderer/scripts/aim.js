@@ -150,11 +150,35 @@ class AIMClient {
 
     async loadBuddies() {
         try {
+            const oldBuddies = this.buddies || [];
             this.buddies = await ipcRenderer.invoke('get-buddies');
+            
+            // Check for buddy status changes and play appropriate sounds
+            this.checkBuddyStatusChanges(oldBuddies, this.buddies);
+            
             this.renderBuddyList();
         } catch (error) {
             console.error('Failed to load buddies:', error);
         }
+    }
+
+    checkBuddyStatusChanges(oldBuddies, newBuddies) {
+        if (oldBuddies.length === 0) return; // Skip on initial load
+        
+        const oldStatusMap = new Map(oldBuddies.map(b => [b.id, b.status]));
+        
+        newBuddies.forEach(buddy => {
+            const oldStatus = oldStatusMap.get(buddy.id);
+            if (oldStatus && oldStatus !== buddy.status) {
+                if (buddy.status === 'online' && oldStatus === 'offline') {
+                    this.playSound('buddy_in');
+                    console.log(`${buddy.name} came online`);
+                } else if (buddy.status === 'offline' && oldStatus === 'online') {
+                    this.playSound('buddy_out');
+                    console.log(`${buddy.name} went offline`);
+                }
+            }
+        });
     }
 
     renderBuddyList() {
@@ -230,15 +254,9 @@ class AIMClient {
     }
 
     async openChatWindow(buddyId) {
-        if (this.chatWindows.has(buddyId)) {
-            // Focus existing window
-            this.chatWindows.get(buddyId).focus();
-            return;
-        }
-
         try {
             const windowId = await ipcRenderer.invoke('open-chat-window', buddyId);
-            this.chatWindows.set(buddyId, { id: windowId });
+            // Main process handles window tracking properly
             this.playSound('receive');
         } catch (error) {
             console.error('Failed to open chat window:', error);
@@ -394,6 +412,8 @@ class AIMClient {
             <div class="menu-item" data-action="sendMessage">Send Message</div>
             <div class="menu-item" data-action="getInfo">Get Info</div>
             <div class="menu-separator"></div>
+            <div class="menu-item" data-action="buddySettings">Buddy Settings...</div>
+            <div class="menu-separator"></div>
             <div class="menu-item" data-action="removeBuddy">Remove Buddy</div>
         `;
 
@@ -449,9 +469,20 @@ class AIMClient {
             case 'getInfo':
                 this.showBuddyInfoDialog(buddy);
                 break;
+            case 'buddySettings':
+                this.openBuddySettings(buddy.id);
+                break;
             case 'removeBuddy':
                 this.removeBuddy(buddy);
                 break;
+        }
+    }
+
+    openBuddySettings(buddyId) {
+        try {
+            ipcRenderer.invoke('open-buddy-settings', buddyId);
+        } catch (error) {
+            console.error('Failed to open buddy settings:', error);
         }
     }
 
@@ -474,9 +505,13 @@ class AIMClient {
         const soundMap = {
             'signon': 'buddy_in',
             'signoff': 'buddy_out', 
+            'buddy_in': 'buddy_in',
+            'buddy_out': 'buddy_out',
             'buddyon': 'buddy_in',
+            'buddyoff': 'buddy_out',
             'receive': 'message',
-            'send': 'send'
+            'send': 'send',
+            'message': 'message'
         };
         
         const mappedSound = soundMap[soundName] || soundName;

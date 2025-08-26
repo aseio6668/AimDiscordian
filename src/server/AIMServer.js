@@ -382,6 +382,32 @@ class AIMServer {
         return await this.conversationManager.getConversationHistory(buddyId);
     }
 
+    async getBuddySettings(buddyId) {
+        const buddy = this.buddies.get(buddyId);
+        if (!buddy) {
+            throw new Error('Buddy not found');
+        }
+        return buddy;
+    }
+
+    async updateBuddySettings(buddyId, settings) {
+        const buddy = this.buddies.get(buddyId);
+        if (!buddy) {
+            throw new Error('Buddy not found');
+        }
+
+        // Update buddy with new settings
+        Object.assign(buddy, settings);
+        this.buddies.set(buddyId, buddy);
+
+        // Save to file
+        const buddyFile = path.join(this.buddiesDir, `${buddyId}.json`);
+        await fs.writeJson(buddyFile, buddy, { spaces: 2 });
+
+        console.log(`Updated settings for buddy: ${buddy.name}`);
+        return true;
+    }
+
     async shutdown() {
         console.log('🔄 Shutting down AIM Server...');
         

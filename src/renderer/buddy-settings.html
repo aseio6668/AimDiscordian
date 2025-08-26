@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Buddy Settings</title>
+    <style>
+        body {
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 11px;
+            background: #c0c0c0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .window {
+            border: 2px outset #c0c0c0;
+            background: #c0c0c0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, #0a246a 0%, #a6caf0 50%, #0a246a 100%);
+            color: white;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .control-btn {
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            width: 16px;
+            height: 14px;
+            font-size: 6px;
+            text-align: center;
+            line-height: 12px;
+            cursor: pointer;
+        }
+
+        .control-btn:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        .content {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+        }
+
+        .tab-container {
+            border: 1px inset #c0c0c0;
+            background: white;
+            height: 100%;
+        }
+
+        .tab-header {
+            background: #c0c0c0;
+            border-bottom: 1px solid #808080;
+            display: flex;
+        }
+
+        .tab {
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom: 1px solid white;
+        }
+
+        .tab-content {
+            padding: 12px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .setting-group {
+            margin-bottom: 16px;
+            border: 1px inset #c0c0c0;
+            padding: 8px;
+        }
+
+        .setting-group h3 {
+            font-size: 11px;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            color: #000080;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider {
+            width: 100px;
+        }
+
+        .value-display {
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 6px;
+            padding: 8px;
+            border-top: 1px solid #808080;
+            background: #c0c0c0;
+        }
+
+        .btn {
+            padding: 2px 12px;
+            border: 1px outset #c0c0c0;
+            background: #c0c0c0;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .btn:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        select, input[type="text"] {
+            font-size: 11px;
+            padding: 1px;
+            border: 1px inset #c0c0c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <span id="windowTitle">Buddy Settings - Loading...</span>
+            <div class="window-controls">
+                <div class="control-btn" onclick="window.close()">×</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="tab-container">
+                <div class="tab-header">
+                    <div class="tab active" onclick="showTab('personality')">Personality</div>
+                    <div class="tab" onclick="showTab('messaging')">Free Messaging</div>
+                    <div class="tab" onclick="showTab('advanced')">Advanced</div>
+                </div>
+
+                <!-- Personality Tab -->
+                <div id="personalityTab" class="tab-content active">
+                    <div class="setting-group">
+                        <h3>Personality Traits</h3>
+                        <div class="setting-row">
+                            <label>Warmth:</label>
+                            <div class="slider-container">
+                                <input type="range" id="warmth" class="slider" min="0" max="100" value="80">
+                                <span id="warmthValue" class="value-display">80%</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <label>Friendliness:</label>
+                            <div class="slider-container">
+                                <input type="range" id="friendliness" class="slider" min="0" max="100" value="90">
+                                <span id="friendlinessValue" class="value-display">90%</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <label>Chattiness:</label>
+                            <div class="slider-container">
+                                <input type="range" id="chattiness" class="slider" min="0" max="100" value="40">
+                                <span id="chattinessValue" class="value-display">40%</span>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <label>Helpfulness:</label>
+                            <div class="slider-container">
+                                <input type="range" id="helpfulness" class="slider" min="0" max="100" value="90">
+                                <span id="helpfulnessValue" class="value-display">90%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Conversation Style</h3>
+                        <div class="setting-row">
+                            <label>Response Length:</label>
+                            <select id="responseLength">
+                                <option value="minimal">Minimal (1-4 words)</option>
+                                <option value="short">Short (1-8 words)</option>
+                                <option value="medium" selected>Medium (1-2 sentences)</option>
+                                <option value="long">Long (detailed)</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <label>Emoji Usage:</label>
+                            <div class="slider-container">
+                                <input type="range" id="emojiUsage" class="slider" min="0" max="100" value="50">
+                                <span id="emojiUsageValue" class="value-display">50%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Free Messaging Tab -->
+                <div id="messagingTab" class="tab-content">
+                    <div class="setting-group">
+                        <h3>Free Messaging</h3>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="freeMessagingEnabled">
+                            <label>Allow this buddy to message me first</label>
+                        </div>
+                        
+                        <div id="freeMessagingSettings" style="margin-top: 12px;">
+                            <div class="setting-row">
+                                <label>Frequency:</label>
+                                <select id="messageFrequency">
+                                    <option value="very_low">Very Rare (2-12 hours)</option>
+                                    <option value="low" selected>Rare (1-6 hours)</option>
+                                    <option value="medium">Occasional (30min-3 hours)</option>
+                                    <option value="high">Frequent (15min-1.5 hours)</option>
+                                    <option value="very_high">Very Frequent (7-45 min)</option>
+                                </select>
+                            </div>
+                            
+                            <h4 style="margin: 12px 0 6px 0; font-size: 11px;">Topics:</h4>
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="topicCasual" value="casual" checked>
+                                <label>Casual Chat</label>
+                            </div>
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="topicEncouragement" value="encouragement">
+                                <label>Encouragement</label>
+                            </div>
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="topicQuestions" value="questions">
+                                <label>Random Questions</label>
+                            </div>
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="topicSharing" value="sharing">
+                                <label>Share Thoughts</label>
+                            </div>
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="topicCheckIn" value="check_in">
+                                <label>Check-ins</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Tab -->
+                <div id="advancedTab" class="tab-content">
+                    <div class="setting-group">
+                        <h3>AI Provider</h3>
+                        <div class="setting-row">
+                            <label>Provider:</label>
+                            <select id="aiProvider">
+                                <option value="auto" selected>Auto-select</option>
+                                <option value="ollama">Ollama (Local)</option>
+                                <option value="openai">OpenAI</option>
+                                <option value="anthropic">Anthropic</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Behavior</h3>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="learningEnabled" checked>
+                            <label>Enable learning from conversations</label>
+                        </div>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="privateMessagesOnly" checked>
+                            <label>Private messages only</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-row">
+            <button class="btn" onclick="resetToDefaults()">Reset</button>
+            <button class="btn" onclick="window.close()">Cancel</button>
+            <button class="btn" onclick="saveSettings()">OK</button>
+        </div>
+    </div>
+
+    <script src="buddy-settings.js"></script>
+</body>
+</html>
