@@ -50,6 +50,9 @@ class AIMClient {
         ipcRenderer.on('sign-off', () => this.signOff());
         ipcRenderer.on('add-buddy-dialog', () => this.showAddBuddyDialog());
         ipcRenderer.on('get-buddy-info', () => this.getBuddyInfo());
+        ipcRenderer.on('buddy-unread-status', (event, buddyId, hasUnread) => {
+            this.updateBuddyUnreadMarker(buddyId, hasUnread);
+        });
 
         // Auto-login check
         if (document.getElementById('autoLogin').checked) {
@@ -228,6 +231,7 @@ class AIMClient {
             ${avatarDisplay}
             <span class="buddy-status-dot ${buddy.status}"></span>
             <span class="buddy-name">${buddy.name}</span>
+            <span class="buddy-unread-marker" style="display: none;">●</span>
             ${buddy.statusMessage ? `<span class="buddy-status-text">${buddy.statusMessage}</span>` : ''}
         `;
 
@@ -574,6 +578,23 @@ class AIMClient {
         document.getElementById('userAvatar').textContent = avatar;
         localStorage.setItem('user_avatar', avatar);
         this.updateStatus(`Avatar changed to ${avatar}`);
+    }
+
+    updateBuddyUnreadMarker(buddyId, hasUnread) {
+        const buddyElement = document.querySelector(`[data-buddy-id="${buddyId}"]`);
+        if (buddyElement) {
+            const unreadMarker = buddyElement.querySelector('.buddy-unread-marker');
+            if (unreadMarker) {
+                unreadMarker.style.display = hasUnread ? 'inline' : 'none';
+                
+                // Add visual emphasis when there are unread messages
+                if (hasUnread) {
+                    buddyElement.classList.add('has-unread');
+                } else {
+                    buddyElement.classList.remove('has-unread');
+                }
+            }
+        }
     }
 
     closeUserAvatarDialog() {

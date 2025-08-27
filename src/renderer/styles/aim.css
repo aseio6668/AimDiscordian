@@ -395,6 +395,25 @@ body {
     font-style: italic;
 }
 
+.buddy-unread-marker {
+    color: #ff4444;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 4px;
+    animation: pulse 1.5s infinite;
+}
+
+.buddy-item.has-unread {
+    background: rgba(255, 68, 68, 0.1);
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
 /* Bottom Toolbar */
 .bottom-toolbar {
     background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);

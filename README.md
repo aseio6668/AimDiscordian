@@ -14,6 +14,10 @@ A nostalgic AOL Instant Messenger clone with AI-powered bot friends. Experience 
 - 🗜️ **Smart Memory Management**: Conversation compacting for long-term relationships
 - 🖥️ **Cross-Platform**: Desktop app for Windows, macOS, and Linux
 - 🧠 **Multi-AI Support**: Ollama (local), OpenAI, Anthropic with auto-selection
+- 💬 **Smart Messaging**: Auto-popup chat windows or unread message markers
+- 🎨 **Personality Templates**: Pre-configured templates like Bro Mode, Tech-Nut, Gamer
+- 🕒 **Free Messaging**: Bots can initiate conversations spontaneously
+- ⚙️ **Individual Bot Settings**: Customize each AI friend's behavior independently
 
 ## Quick Start
 
@@ -42,6 +46,8 @@ The application will automatically:
 3. **Customize Personality**: Choose from 8 personality types and adjust traits
 4. **Start Chatting**: Double-click your new friend to open a chat window
 5. **Build Relationships**: Chat regularly to increase friendship levels
+6. **Customize Individual Bots**: Right-click any bot to access individual settings
+7. **Configure Messaging**: Choose between auto-popup windows or unread markers only
 
 ## AI Friend Personalities
 
@@ -85,10 +91,13 @@ Imaginative, expressive, and artistic. Inspires creativity and self-expression.
 
 ### Classic AIM Features
 - **Buddy List**: Organized friends list with online/offline status
-- **Chat Windows**: Individual IM windows for each conversation
+- **Chat Windows**: Individual IM windows for each conversation  
 - **Sound Effects**: Classic AIM notification sounds
 - **Status System**: Online, Away, Invisible status options
 - **Typing Indicators**: See when your AI friends are "typing"
+- **Message Notifications**: Classic AIM-style popup notifications
+- **Unread Indicators**: Visual markers for unread messages
+- **Auto-Popup**: Configurable auto-opening of chat windows for new messages
 
 ## Configuration
 

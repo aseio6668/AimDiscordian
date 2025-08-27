@@ -311,6 +311,32 @@ class AIMDiscordian {
         global.mainApp = this;
     }
 
+    getAutoPopupPreference() {
+        // Load from saved preferences
+        try {
+            const savedPrefs = require('fs').readFileSync(
+                require('path').join(require('os').homedir(), '.aim-discordian-prefs.json'), 
+                'utf8'
+            );
+            const prefs = JSON.parse(savedPrefs);
+            return prefs.autoPopupMessages !== false; // Default to true
+        } catch (error) {
+            return true; // Default to true for classic AIM behavior
+        }
+    }
+
+    updateBuddyUnreadStatus(buddyId, hasUnread) {
+        // Send unread status update to main window
+        if (this.mainWindow && !this.mainWindow.isDestroyed()) {
+            this.mainWindow.webContents.send('buddy-unread-status', buddyId, hasUnread);
+        }
+    }
+
+    clearUnreadMessages(buddyId) {
+        // Clear unread status when chat window is opened or focused
+        this.updateBuddyUnreadStatus(buddyId, false);
+    }
+
     async startServer() {
         if (!this.server) {
             this.server = new AIMServer();
@@ -336,6 +362,9 @@ class AIMDiscordian {
     }
 
     openChatWindow(buddyId) {
+        // Clear unread status when opening chat
+        this.clearUnreadMessages(buddyId);
+        
         // Check if window already exists
         if (this.chatWindows.has(buddyId)) {
             const existingWindow = this.chatWindows.get(buddyId);
@@ -387,14 +416,23 @@ class AIMDiscordian {
             // Window is open, send message directly
             chatWindow.webContents.send('incoming-message', message);
         } else {
-            // Window is closed, store message and show notification
+            // Window is closed, store message and handle notification
             if (!this.pendingMessages.has(buddyId)) {
                 this.pendingMessages.set(buddyId, []);
             }
             this.pendingMessages.get(buddyId).push(message);
             
-            // Show message notification window
-            this.showMessageNotification(buddyId, message);
+            // Check auto-popup preference
+            const autoPopupEnabled = this.getAutoPopupPreference();
+            
+            if (autoPopupEnabled) {
+                // Auto-open chat window for new message
+                this.openChatWindow(buddyId);
+            } else {
+                // Show notification and update buddy list with unread marker
+                this.showMessageNotification(buddyId, message);
+                this.updateBuddyUnreadStatus(buddyId, true);
+            }
         }
         
         return true;

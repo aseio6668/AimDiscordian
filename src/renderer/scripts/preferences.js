@@ -127,6 +127,7 @@ class PreferencesManager {
             showOfflineBuddies: true,
             backupFrequency: 'weekly',
             maxBuddies: 50,
+            autoPopupMessages: true,
 
             // Appearance
             windowTheme: 'classic',
