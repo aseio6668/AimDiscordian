@@ -15,10 +15,17 @@ class AIMDiscordian {
     }
 
     setupApp() {
-        // Fix GPU issues on Windows
+        // Fix GPU issues on Windows - comprehensive GPU disabling
+        app.commandLine.appendSwitch('disable-gpu');
         app.commandLine.appendSwitch('disable-gpu-sandbox');
         app.commandLine.appendSwitch('disable-software-rasterizer');
         app.commandLine.appendSwitch('disable-gpu-process-crash-limit');
+        app.commandLine.appendSwitch('disable-gpu-compositing');
+        app.commandLine.appendSwitch('disable-gpu-rasterization');
+        app.commandLine.appendSwitch('disable-background-timer-throttling');
+        app.commandLine.appendSwitch('disable-backgrounding-occluded-windows');
+        app.commandLine.appendSwitch('disable-renderer-backgrounding');
+        app.commandLine.appendSwitch('no-sandbox');
         
         app.whenReady().then(() => this.createWindow());
         
@@ -498,7 +505,7 @@ class AIMDiscordian {
             <div class="content">
                 <div class="icon"></div>
                 <div class="buddy-name">${buddy.name}</div>
-                <div class="message-text">${message.content.substring(0, 80)}${message.content.length > 80 ? '...' : ''}</div>
+                <div class="message-text">${message.content.substring(0, 800)}${message.content.length > 800 ? '...' : ''}</div>
             </div>
             <script>
                 // Play message sound

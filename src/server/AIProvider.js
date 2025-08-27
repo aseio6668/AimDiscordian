@@ -326,9 +326,9 @@ Respond as ${buddy.name}:`;
         cleaned = cleaned.replace(/^(System:|Assistant:|AI:|User:)/gi, '');
         cleaned = cleaned.replace(/\n.*$/g, ''); // Remove everything after first newline
         
-        // Ensure it's not too long (AIM style)
-        if (cleaned.length > 200) {
-            cleaned = cleaned.substring(0, 197) + '...';
+        // Ensure it's not too long (AIM style - increased limit)
+        if (cleaned.length > 2000) {
+            cleaned = cleaned.substring(0, 1997) + '...';
         }
         
         // Remove excessive punctuation
